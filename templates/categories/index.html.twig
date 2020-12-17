@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CategoriesController!{% endblock %}
+
+{% block body %}
+<div class="container col-md-10 mt-5">
+    <div class="card">
+        <div class="card-header">
+            <center><h4>Agrega una categoria nueva</h4></center>
+        </div>
+        <div class="card-body">
+            <form id="registrarCategorias" >
+                <div class="row col-md-12" >
+                    <div class="col-6">
+                        <label class="form-label">Codigo</label>
+                        <input type="text" class="form-control" id="codigo" required>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Descripcion</label>
+                        <textarea class="form-control" id="descripcion" required></textarea>
+                    </div>
+                </div>
+                <button id="registrar" type="submit" class="btn btn-outline-success mt-4">Registrar</button>
+            </form>
+        </div>
+    </div>
+    <div class="card mt-4">
+        <div class="card-header">
+            <center><h4>Lista de categorias</h4></center>
+        </div>
+        <div class="card-body table-responsive">
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Estado</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody id="categorias" >
+                {% for item in categories %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.code }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.description }}</td>
+                        {% if item.active == true %}
+                            <td><span class="badge bg-success">Habilitado</span></td>
+                            <td><button delete="{{item.id}}" class="btn btn-outline-danger desactivar" >Desactivar</button></td>
+                        {% else %}
+                            <td><span class="badge bg-warning">Deshabilitado</span></td>
+                            <td><button class="btn btn-outline-success" >Activar</button></td>
+                        {% endif %}
+                        
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="{{ asset('Js/Categories.js') }}" ></script>
+{% endblock %}

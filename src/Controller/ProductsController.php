@@ -20,8 +20,9 @@ class ProductsController extends AbstractController
      */
     public function index(): Response
     {
+        $products = $this->getDoctrine()->getRepository(Products::class)->findAll();
         return $this->render('products/index.html.twig', [
-            'controller_name' => 'ProductsController',
+            'products' => $products,
         ]);
     }
     
@@ -45,6 +46,21 @@ class ProductsController extends AbstractController
         return new JsonResponse([
             "error" => false,
             "message" => "Se ha registrado correctamente"
+        ]);
+    }
+
+    /**
+     * @Route("/products/{id}", methods={"DELETE"})
+     */
+    public function destroy(int $id): JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $product = $entityManager->getRepository(Products::class)->find($id);
+        $entityManager->remove($product);
+        $entityManager->flush();
+        return new JsonResponse([
+            "error"   => false,
+            "message" => "Se ha eliminado correctamente"
         ]);
     }
 

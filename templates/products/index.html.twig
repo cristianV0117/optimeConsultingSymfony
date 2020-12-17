@@ -34,12 +34,45 @@
                     <div class="mt-3" >
                         <center>Por favor selecciona la categoria</center>
                         <select id="categorias" class="form-control" required>
-                            <option value="" > -- Categorias -- </option>
+                            <option value="" > -- Categorias disponibles -- </option>
                         </select>
                     </div>
                 </div>
                 <button id="registrar" type="submit" class="btn btn-outline-success mt-4">Registrar</button>
             </form>
+        </div>
+    </div>
+    <div class="card mt-4">
+        <div class="card-header">
+            <center><h4>Lista de categorias</h4></center>
+        </div>
+        <div class="card-body table-responsive">
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Marca</th>
+                        <th>Precio</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody id="productos" >
+                {% for item in products %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.code }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.brand }}</td>
+                        <td>{{ item.price }}</td>
+                        <td><button delete="{{item.id}}"  class="btn btn-outline-danger eliminar" >Eliminar</button></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

@@ -47,13 +47,28 @@ class CategoriesController extends AbstractController
     }
 
     /**
-     * @Route("/categories/{id}", methods={"PUT"})
+     * @Route("/categories/disable/{id}", methods={"PUT"})
      */
     public function disable(int $id): JsonResponse
     {
         $entityManager = $this->getDoctrine()->getManager();
         $categorie = $entityManager->getRepository(Categories::class)->find($id);
         $categorie->setActive(false);
+        $entityManager->flush();
+        return new JsonResponse([
+            "error"   => false,
+            "message" => "Se ha actualizado correctamente"
+        ]);
+    }
+
+    /**
+     * @Route("/categories/enable/{id}", methods={"PUT"})
+     */
+    public function enable(int $id): JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $categorie = $entityManager->getRepository(Categories::class)->find($id);
+        $categorie->setActive(true);
         $entityManager->flush();
         return new JsonResponse([
             "error"   => false,

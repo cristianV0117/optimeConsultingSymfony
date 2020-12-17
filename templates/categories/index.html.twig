@@ -56,7 +56,7 @@
                             <td><button delete="{{item.id}}" class="btn btn-outline-danger desactivar" >Desactivar</button></td>
                         {% else %}
                             <td><span class="badge bg-warning">Deshabilitado</span></td>
-                            <td><button class="btn btn-outline-success" >Activar</button></td>
+                            <td><button enable="{{item.id}}"  class="btn btn-outline-success activar" >Activar</button></td>
                         {% endif %}
                         
                     </tr>

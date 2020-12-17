@@ -42,7 +42,24 @@ class Categories
         for (let index = 0; index < elements.length; index++) {
             elements[index].addEventListener('click', () => {
                 let id = elements[index].getAttribute("delete");
-                this.fetch('PUT', this.route, `/${id}`).then(consumible => {
+                this.fetch('PUT', '/categories/disable', `/${id}`).then(consumible => {
+                    if (!consumible.error) {
+                        alert(consumible.message);
+                        location.reload();
+                    } 
+                })
+            })
+        }
+        return this;
+    }
+
+    enableCategories()
+    {
+        let elements = document.getElementsByClassName("activar");
+        for (let index = 0; index < elements.length; index++) {
+            elements[index].addEventListener('click', () => {
+                let id = elements[index].getAttribute("enable");
+                this.fetch('PUT', '/categories/enable', `/${id}`).then(consumible => {
                     if (!consumible.error) {
                         alert(consumible.message);
                         location.reload();
@@ -76,4 +93,4 @@ class Categories
         }
     }
 }
-(new Categories()).categories().disableCategories();
+(new Categories()).categories().disableCategories().enableCategories();

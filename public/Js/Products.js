@@ -44,6 +44,26 @@ class Products
         return this;
     }
 
+    deleteProducts()
+    {
+        let con;
+        let elements = document.getElementsByClassName("eliminar");
+        for (let index = 0; index < elements.length; index++) {
+            elements[index].addEventListener('click', () => {
+                con = confirm("¿ Esta seguro de borrar el registro ?");
+                if (con) {
+                    let id = elements[index].getAttribute("delete");
+                    this.fetch('DELETE', this.route, `/${id}`).then(consumible => {
+                        if (!consumible.error) {
+                            alert(consumible.message);
+                            location.reload();
+                        }
+                    });
+                }
+            })
+        }
+    }
+
     categories()
     {
         let categories = document.getElementById("categorias");
@@ -78,7 +98,13 @@ class Products
             }).then(response => {
                 return response.json();
             });
+        } else {
+            return fetch(route + data, {
+                'method' : 'DELETE'
+            }).then(response => {
+                return response.json();
+            });
         }
     }
 }
-(new Products()).categories().products();
+(new Products()).categories().products().deleteProducts();

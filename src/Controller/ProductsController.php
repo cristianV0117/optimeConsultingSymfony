@@ -7,6 +7,7 @@ namespace App\Controller;
 
 use App\Entity\Products;
 use App\Entity\Categories;
+use App\Core\Validator as v;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,7 +32,18 @@ class ProductsController extends AbstractController
      */
     public function store(Request $request): JsonResponse
     {
-        $post          = json_decode($request->getContent());
+        $post = json_decode($request->getContent());
+        $validateCode  = (new v())->validate($post->code)->specialCharacters()->minMaxLength(4, 10)->failed();
+        $validateName  = (new v())->validate($post->name)->minMaxLength(4, 100)->failed();
+        $validatePrice = (new v())->validate($post->price)->isNum()->isPositive()->failed(); 
+
+        if ($validateCode || $validateName || $validatePrice) {
+            return new JsonResponse([
+                "error" => true,
+                "message" => "Por favor valida correctamente tus datos"
+            ]);
+        }
+
         $categories    = $this->getDoctrine()->getRepository(Categories::class)->find($post->categorie);
         $entityManager = $this->getDoctrine()->getManager();
         $categorie = new Products();

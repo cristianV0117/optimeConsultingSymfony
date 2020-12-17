@@ -3,7 +3,39 @@
 {% block title %}HOME{% endblock %}
 
 {% block body %}
-<div>
-    hola mundo :D
+<div class="container col-md-10 mt-5" >
+    <div class="card" >
+        <div class="card-header">
+            <center><h4>Productos disponibles</h4></center>
+        </div>
+        <div class="card-body">
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Marca</th>
+                        <th>Categoria</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody id="categorias" >
+                {% for item in records %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.code }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.brand }}</td>
+                        <td>{{ item.nameCategorie }}</td>
+                        <td>{{ item.price }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <a href="/products" ><button class="btn btn-outline-primary float-end ms-2" >Gestionar prodcutos</button></a>
+            <a href="/categories" ><button class="btn btn-outline-primary float-end ms-2" >Gestionar categorias</button></a>
+        </div>
+    </div>
 </div>
 {% endblock %}

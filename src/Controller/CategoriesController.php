@@ -5,7 +5,7 @@
 */
 namespace App\Controller;
 
-//use App\Form\CategoriesType;
+
 use App\Entity\Categories;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

@@ -38,6 +38,8 @@ class Products
                 if (!consumible.error) {
                     alert(consumible.message);
                     location.reload();
+                } else {
+                    alert(consumible.message);
                 }
             });
         })

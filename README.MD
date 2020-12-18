@@ -31,6 +31,7 @@
 ## Anotaciones
 * Al ser mi primera vez utilizando Symfony tuve complicaciones para agregar **bootstrap** en el proyecto desde node_modules por lo que lo agregué con enlaces externos.
 * Tambien sucedió con **DataTable JS**, asi que lo implemente en el Directorio **public** del proyecto y para ello tuve que implementar jQuery.
+* En test.sql se encuentra el script de la tablas a traves de la base de datos test.
 
 
 ### *¡Gracias!*

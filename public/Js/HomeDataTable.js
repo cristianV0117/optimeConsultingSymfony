@@ -5,7 +5,7 @@ class HomeDataTable
         $('#home').DataTable({
             "language": {
                 "lengthMenu": "Mostrar _MENU_ registros",
-                "zeroRecords": "No hay usuarios",
+                "zeroRecords": "No hay resultados",
                 "info": "mostrar pagina _PAGE_ de _PAGES_",
                 "infoEmpty": "No records available",
                 "search": "Buscar:",

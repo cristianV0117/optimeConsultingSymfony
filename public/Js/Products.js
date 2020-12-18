@@ -8,6 +8,7 @@ class Products
     {
         this.route = '/products';
         this.registerProducts = document.getElementById('registrarProductos');
+        this.updatedProducts  = document.getElementById('editarProductos');
         this.code;
         this.name;
         this.description;
@@ -18,31 +19,58 @@ class Products
 
     products()
     {
-        this.registerProducts.addEventListener('submit', event => {
-            event.preventDefault();
-            this.code        = document.getElementById('codigo').value;
-            this.name        = document.getElementById('nombre').value;
-            this.description = document.getElementById('descripcion').value;
-            this.brand       = document.getElementById('marca').value;
-            this.categorie   = document.getElementById('categorias').value;
-            this.price       = document.getElementById('precio').value;
-            const data = {
-                'code'        : this.code,
-                'name'        : this.name,
-                'description' : this.description,
-                'brand'       : this.brand,
-                'categorie'   : this.categorie,
-                'price'       : this.price
-            }
-            this.fetch('POST', this.route, data).then(consumible => {
-                if (!consumible.error) {
-                    alert(consumible.message);
-                    location.reload();
-                } else {
-                    alert(consumible.message);
+        if (this.registerProducts != null) {
+            this.registerProducts.addEventListener('submit', event => {
+                event.preventDefault();
+                this.code        = document.getElementById('codigo').value;
+                this.name        = document.getElementById('nombre').value;
+                this.description = document.getElementById('descripcion').value;
+                this.brand       = document.getElementById('marca').value;
+                this.categorie   = document.getElementById('categorias').value;
+                this.price       = document.getElementById('precio').value;
+                const data = {
+                    'code'        : this.code,
+                    'name'        : this.name,
+                    'description' : this.description,
+                    'brand'       : this.brand,
+                    'categorie'   : this.categorie,
+                    'price'       : this.price
                 }
+                this.fetch('POST', this.route, data).then(consumible => {
+                    if (!consumible.error) {
+                        alert(consumible.message);
+                        location.reload();
+                    } else {
+                        alert(consumible.message);
+                    }
+                });
             });
-        })
+        }
+        return this;
+    }
+
+    updateProducts()
+    {
+        if (this.updatedProducts != null) {
+            this.updatedProducts.addEventListener('submit', event => {
+                event.preventDefault();
+                let id = document.getElementById('id').value;
+                const data = {
+                    'code'        : document.getElementById('codigoEditar').value,
+                    'name'        : document.getElementById('nombreEditar').value,
+                    'description' : document.getElementById('descripcionEditar').value,
+                    'brand'       : document.getElementById('marcaEditar').value,
+                    'categorie'   : document.getElementById('categoriasEditar').value,
+                    'price'       : document.getElementById('precioEditar').value
+                }
+                this.fetch('PUT', this.route, `/${id}`, data).then(consumible => {
+                    if (!consumible.error) {
+                        alert(consumible.message);
+                        location.reload();
+                    }
+                });
+            });
+        }
         return this;
     }
 
@@ -64,22 +92,40 @@ class Products
                 }
             })
         }
+        return this;
     }
 
     categories()
     {
         let categories = document.getElementById("categorias");
-        this.fetch('GET', '/categories/select').then(consumible => {
-            if (!consumible.error) {
-                for (let index = 0; index < consumible.message.length; index++) {
-                    categories.innerHTML += `<option value="${consumible.message[index].id}" >${consumible.message[index].name}</option>`;
+        if (categories != null) {
+            this.fetch('GET', '/categories/select').then(consumible => {
+                if (!consumible.error) {
+                    for (let index = 0; index < consumible.message.length; index++) {
+                        categories.innerHTML += `<option value="${consumible.message[index].id}" >${consumible.message[index].name}</option>`;
+                    }
                 }
-            }
-        });
+            });
+        }
         return this;
     }
 
-    fetch(type, route, data = null)
+    categoriesUpdate()
+    {
+        let categories = document.getElementById("categoriasEditar");
+        if (categories != null) {
+            this.fetch('GET', '/categories/select').then(consumible => {
+                if (!consumible.error) {
+                    for (let index = 0; index < consumible.message.length; index++) {
+                        categories.innerHTML += `<option value="${consumible.message[index].id}" >${consumible.message[index].name}</option>`;
+                    }
+                }
+            });
+        } 
+        return this;
+    }
+
+    fetch(type, route, data = null, extraData = null)
     {
         if (type === 'GET') {
             return fetch(route, {
@@ -96,7 +142,8 @@ class Products
             });
         } else if (type === 'PUT') {
             return fetch(route + data, {
-                'method' : 'PUT'
+                'method' : 'PUT',
+                'body'   : JSON.stringify(extraData)
             }).then(response => {
                 return response.json();
             });
@@ -109,4 +156,4 @@ class Products
         }
     }
 }
-(new Products()).categories().products().deleteProducts();
+(new Products()).categories().products().deleteProducts().categoriesUpdate().updateProducts();

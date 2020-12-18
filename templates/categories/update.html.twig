@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorias{% endblock %}
+
+{% block body %}
+<div class="container col-md-10 mt-5">
+    <div class="card">
+        <div class="card-header">
+            <center><h4>Editar categoria {{ categorie.name }}</h4></center>
+        </div>
+        <div class="card-body">
+           <form id="editarCategorias" >
+                <input type="hidden" id="id" value="{{ categorie.id }}"  />
+                <div class="row col-md-12" >
+                    <div class="col-6">
+                        <label class="form-label">Codigo</label>
+                        <input value="{{ categorie.code }}" type="text" class="form-control" id="codigoEditar" required>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label">Nombre</label>
+                        <input value="{{ categorie.name }}" type="text" class="form-control" id="nombreEditar" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Descripcion</label>
+                        <textarea class="form-control" id="descripcionEditar" required>{{categorie.description}}</textarea>
+                    </div>
+                </div>
+                <button id="editar" type="submit" class="btn btn-outline-success mt-4 float-end">Editar</button>
+            </form>
+            <a href="/categories" ><button class="btn btn-outline-primary mt-4">Volver</button></a>
+        </div>
+    </div>
+</div>
+<script src="{{ asset('Js/Categories.js') }}" ></script>
+{% endblock %}

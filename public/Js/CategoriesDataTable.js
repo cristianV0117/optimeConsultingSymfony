@@ -3,9 +3,10 @@ class CategoriesDataTable
     dataTable()
     {
         $('#categoriasTabla').DataTable({
+            "pageLength": 25,
             "language": {
                 "lengthMenu": "Mostrar _MENU_ registros",
-                "zeroRecords": "No hay usuarios",
+                "zeroRecords": "No hay categorias",
                 "info": "mostrar pagina _PAGE_ de _PAGES_",
                 "infoEmpty": "No records available",
                 "search": "Buscar:",

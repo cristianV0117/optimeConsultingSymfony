@@ -28,7 +28,7 @@
                         <td>{{ item.name }}</td>
                         <td>{{ item.brand }}</td>
                         <td>{{ item.nameCategorie }}</td>
-                        <td>{{ item.price }}</td>
+                        <td>{{ item.price|number_format }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

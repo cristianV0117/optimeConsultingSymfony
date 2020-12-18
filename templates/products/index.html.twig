@@ -56,7 +56,8 @@
                         <th>Descripcion</th>
                         <th>Marca</th>
                         <th>Precio</th>
-                        <th>Accion</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody id="productos" >
@@ -68,6 +69,7 @@
                         <td>{{ item.description }}</td>
                         <td>{{ item.brand }}</td>
                         <td>{{ item.price }}</td>
+                        <td><a href="/products/update/{{ item.id }}" ><button class="btn btn-outline-success" >Editar</button></a></td>
                         <td><button delete="{{item.id}}"  class="btn btn-outline-danger eliminar" >Eliminar</button></td>
                     </tr>
                 {% endfor %}

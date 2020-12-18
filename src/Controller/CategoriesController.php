@@ -64,6 +64,36 @@ class CategoriesController extends AbstractController
     }
 
     /**
+     * @Route("/categories/update/{id}", methods={"GET"})
+     */
+    public function edit(int $id): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $categorie = $entityManager->getRepository(Categories::class)->find($id);
+        return $this->render('categories/update.html.twig', [
+            "categorie" => $categorie
+        ]);
+    }
+
+    /**
+     * @Route("/categories/{id}", methods={"PUT"})
+     */
+    public function update(Request $request, int $id): JsonResponse
+    {
+        $post = json_decode($request->getContent());
+        $entityManager = $this->getDoctrine()->getManager();
+        $categorie = $entityManager->getRepository(Categories::class)->find($id);
+        $categorie->setCode($post->code);
+        $categorie->setName($post->name);
+        $categorie->setDescription($post->description);
+        $entityManager->flush();
+        return new JsonResponse([
+            "error"   => false,
+            "message" => "Se ha actualizado con exito"
+        ]);
+    }
+
+    /**
      * @Route("/categories/disable/{id}", methods={"PUT"})
      */
     public function disable(int $id): JsonResponse

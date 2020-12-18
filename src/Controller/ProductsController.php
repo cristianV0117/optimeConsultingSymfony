@@ -52,18 +52,52 @@ class ProductsController extends AbstractController
         }
         $categories    = $this->getDoctrine()->getRepository(Categories::class)->find($post->categorie);
         $entityManager = $this->getDoctrine()->getManager();
-        $categorie = new Products();
-        $categorie->setCode($post->code);
-        $categorie->setName($post->name);
-        $categorie->setDescription($post->description);
-        $categorie->setBrand($post->brand);
-        $categorie->setCategories($categories);
-        $categorie->setPrice($post->price);
-        $entityManager->persist($categorie);
+        $product = new Products();
+        $product->setCode($post->code);
+        $product->setName($post->name);
+        $product->setDescription($post->description);
+        $product->setBrand($post->brand);
+        $product->setCategories($categories);
+        $product->setPrice($post->price);
+        $entityManager->persist($product);
         $entityManager->flush();
         return new JsonResponse([
             "error" => false,
             "message" => "Se ha registrado correctamente"
+        ]);
+    }
+
+    /**
+     * @Route("/products/update/{id}", methods={"GET"})
+     */
+    public function edit(int $id): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $product = $entityManager->getRepository(Products::class)->find($id);
+        return $this->render('products/update.html.twig', [
+            "product" => $product
+        ]);
+    }
+
+    /**
+     * @Route("/products/{id}", methods={"PUT"})
+     */
+    public function update(Request $request, int $id): JsonResponse
+    {
+        $post = json_decode($request->getContent());
+        $categories    = $this->getDoctrine()->getRepository(Categories::class)->find($post->categorie);
+        $entityManager = $this->getDoctrine()->getManager();
+        $product = $entityManager->getRepository(Products::class)->find($id);
+        $product->setCode($post->code);
+        $product->setName($post->name);
+        $product->setDescription($post->description);
+        $product->setBrand($post->brand);
+        $product->setCategories($categories);
+        $product->setPrice($post->price);
+        $entityManager->flush();
+        return new JsonResponse([
+            "error"   => false,
+            "message" => "Se ha actualizado con exito"
         ]);
     }
 

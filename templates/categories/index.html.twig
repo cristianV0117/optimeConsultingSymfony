@@ -42,6 +42,7 @@
                         <th>Descripcion</th>
                         <th>Estado</th>
                         <th>Accion</th>
+                        <th>Editar</th>
                     </tr>
                 </thead>
                 <tbody id="categorias" >
@@ -58,7 +59,7 @@
                             <td><span class="badge bg-warning">Deshabilitado</span></td>
                             <td><button enable="{{item.id}}"  class="btn btn-outline-success activar" >Activar</button></td>
                         {% endif %}
-                        
+                        <td><a href="/categories/update/{{ item.id }}" ><button class="btn btn-outline-success" >Editar</button></a></td>
                     </tr>
                 {% endfor %}
                 </tbody>

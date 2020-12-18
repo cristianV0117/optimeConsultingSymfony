@@ -7,7 +7,8 @@ class Categories
     constructor()
     {
         this.route = '/categories';
-        this.registerCategories = document.getElementById('registrarCategorias');
+        this.registerCategories  = document.getElementById('registrarCategorias');
+        this.updatedCategories   = document.getElementById('editarCategorias');
         this.code;
         this.name;
         this.description;
@@ -15,26 +16,50 @@ class Categories
 
     categories()
     {
-        this.registerCategories.addEventListener('submit', event => {
-            event.preventDefault();
-            this.code        = document.getElementById('codigo').value;
-            this.name        = document.getElementById('nombre').value;
-            this.description = document.getElementById('descripcion').value;
-            const data = {
-                'code'        : this.code,
-                'name'        : this.name,
-                'description' : this.description,
-                'active'      : true
-            }
-            this.fetch('POST', this.route, data).then(consumible => {
-                if (!consumible.error) {
-                    alert(consumible.message);
-                    location.reload();
-                } else {
-                    alert(consumible.message);
+        if (this.registerCategories != null) {
+            this.registerCategories.addEventListener('submit', event => {
+                event.preventDefault();
+                this.code        = document.getElementById('codigo').value;
+                this.name        = document.getElementById('nombre').value;
+                this.description = document.getElementById('descripcion').value;
+                const data = {
+                    'code'        : this.code,
+                    'name'        : this.name,
+                    'description' : this.description,
+                    'active'      : true
                 }
+                this.fetch('POST', this.route, data).then(consumible => {
+                    if (!consumible.error) {
+                        alert(consumible.message);
+                        location.reload();
+                    } else {
+                        alert(consumible.message);
+                    }
+                });
             });
-        });
+        }
+        return this;
+    }
+
+    updateCategories()
+    {
+        if (this.updatedCategories != null) {
+            this.updatedCategories.addEventListener('submit', event => {
+                event.preventDefault();
+                let id = document.getElementById('id').value;
+                const data = {
+                    'code'        : document.getElementById('codigoEditar').value,
+                    'name'        : document.getElementById('nombreEditar').value,
+                    'description' : document.getElementById('descripcionEditar').value
+                }
+                this.fetch('PUT', this.route, `/${id}`, data).then(consumible => {
+                    if (!consumible.error) {
+                        alert(consumible.message);
+                        location.reload();
+                    }
+                });
+            });
+        }
         return this;
     }
 
@@ -44,11 +69,11 @@ class Categories
         for (let index = 0; index < elements.length; index++) {
             elements[index].addEventListener('click', () => {
                 let id = elements[index].getAttribute("delete");
-                this.fetch('PUT', '/categories/disable', `/${id}`).then(consumible => {
+                this.fetch('PUT', '/categories/disable', `/${id}`, null).then(consumible => {
                     if (!consumible.error) {
                         alert(consumible.message);
                         location.reload();
-                    } 
+                    }
                 })
             })
         }
@@ -61,7 +86,7 @@ class Categories
         for (let index = 0; index < elements.length; index++) {
             elements[index].addEventListener('click', () => {
                 let id = elements[index].getAttribute("enable");
-                this.fetch('PUT', '/categories/enable', `/${id}`).then(consumible => {
+                this.fetch('PUT', '/categories/enable', `/${id}`, null).then(consumible => {
                     if (!consumible.error) {
                         alert(consumible.message);
                         location.reload();
@@ -72,7 +97,7 @@ class Categories
         return this;
     }
 
-    fetch(type, route, data)
+    fetch(type, route, data = null, extraData = null)
     {
         if (type === 'GET') {
             return fetch(route, {
@@ -89,11 +114,12 @@ class Categories
             });
         } else if (type === 'PUT') {
             return fetch(route + data, {
-                'method' : 'PUT'
+                'method' : 'PUT',
+                'body'   : JSON.stringify(extraData)
             }).then(response => {
                 return response.json();
             });
         }
     }
 }
-(new Categories()).categories().disableCategories().enableCategories();
+(new Categories()).categories().disableCategories().enableCategories().updateCategories();

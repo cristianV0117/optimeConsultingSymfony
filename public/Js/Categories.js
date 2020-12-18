@@ -30,9 +30,11 @@ class Categories
                 if (!consumible.error) {
                     alert(consumible.message);
                     location.reload();
+                } else {
+                    alert(consumible.message);
                 }
             });
-        })
+        });
         return this;
     }
 
@@ -67,6 +69,7 @@ class Categories
                 })
             })
         }
+        return this;
     }
 
     fetch(type, route, data)

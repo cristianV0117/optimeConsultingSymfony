@@ -7,6 +7,7 @@ namespace App\Controller;
 
 
 use App\Entity\Categories;
+use App\Core\Validator as v;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -32,6 +33,22 @@ class CategoriesController extends AbstractController
     public function store(Request $request): JsonResponse
     {
         $post = json_decode($request->getContent());
+        $validateCode  = (new v())->validate($post->code)->specialCharacters()->failed();
+        $validateName  = (new v())->validate($post->name)->minMaxLength(2, 100)->failed();
+
+        if ($validateCode || $validateName) {
+            return new JsonResponse([
+                "error" => true,
+                "message" => "Por favor valida correctamente tus datos"
+            ]);
+        }
+        if ($this->categoriesRecordExist($post->code, $post->name)) {
+            return new JsonResponse([
+                "error" => true,
+                "message" => "El registro ya existe"
+            ]);
+        }
+        
         $entityManager = $this->getDoctrine()->getManager();
         $categorie = new Categories();
         $categorie->setCode($post->code);
@@ -92,5 +109,19 @@ class CategoriesController extends AbstractController
             "error"   => false,
             "message" => $categories
         ]);
+    }
+
+    private function categoriesRecordExist($code, $name)
+    {
+        $repository = $this->getDoctrine()->getRepository(Categories::class);
+        $query = $repository->createQueryBuilder('c')
+            ->select('c.id')
+            ->where('c.code = :code')
+            ->orWhere('c.name = :name')
+            ->setParameter('code', $code)
+            ->setParameter('name', $name)
+            ->getQuery();
+        $categorie = $query->execute();
+        return (!empty($categorie)) ? true : false;
     }
 }

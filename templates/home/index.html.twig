@@ -8,8 +8,8 @@
         <div class="card-header">
             <center><h4>Productos disponibles</h4></center>
         </div>
-        <div class="card-body">
-            <table class="table table-borderless">
+        <div class="card-body table-responsive">
+            <table id="home" class="table table-borderless">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -33,9 +33,11 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <br />
             <a href="/products" ><button class="btn btn-outline-primary float-end ms-2" >Gestionar prodcutos</button></a>
             <a href="/categories" ><button class="btn btn-outline-primary float-end ms-2" >Gestionar categorias</button></a>
         </div>
     </div>
 </div>
+
 {% endblock %}

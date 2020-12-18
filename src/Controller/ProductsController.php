@@ -44,6 +44,12 @@ class ProductsController extends AbstractController
             ]);
         }
 
+        if ($this->productsRecordExist($post->code, $post->name)) {
+            return new JsonResponse([
+                "error" => true,
+                "message" => "El registro ya existe"
+            ]);
+        }
         $categories    = $this->getDoctrine()->getRepository(Categories::class)->find($post->categorie);
         $entityManager = $this->getDoctrine()->getManager();
         $categorie = new Products();
@@ -76,4 +82,17 @@ class ProductsController extends AbstractController
         ]);
     }
 
+    private function productsRecordExist($code, $name)
+    {
+        $repository = $this->getDoctrine()->getRepository(Products::class);
+        $query = $repository->createQueryBuilder('c')
+            ->select('c.id')
+            ->where('c.code = :code')
+            ->orWhere('c.name = :name')
+            ->setParameter('code', $code)
+            ->setParameter('name', $name)
+            ->getQuery();
+        $product = $query->execute();
+        return (!empty($product)) ? true : false;
+    }
 }

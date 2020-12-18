@@ -1,7 +1,7 @@
-# Prueba practica symfony
+# Prueba practica Symfony
 ## Cristian Camilo Vasquez Osorio - Optime Consulting
 
-### Proyecto realizado de 16/12/2020 a 17/12/2020
+### Proyecto realizado del 16/12/2020 al 17/12/2020
 
 ## En el desarrollo se ha utilizado
 * PHP V 7.3.6
@@ -16,20 +16,21 @@
 * Postman
 * MySQL workbench
 
-* Boostrap V 5.0 *externamente*
+* bootstrap V 5.0 **externamente**
 * DataTable
+* JQuery V 3.2
 
 ## Objetivos cumplidos
-* Implementar el *CRUD* para categorias y prodcutos.
-* *No* utilizar comandos de symfony para realizar el CRUD automaticamente.
+* Implementar el **CRUD** para categorias y prodcutos.
+* **No** utilizar comandos de symfony para realizar el CRUD automaticamente.
 * Realizar las validaciones correspondientes para insertar categorias.
 * Realizar las validaciones correspondientes para insertar productos.
-* Realizar los objetivos (plus) como filtrar registros, paginar, ordenar por columna.
-* Validar el estado de *habilitado* o *deshabilitado* de las categorias para su uso.
+* Realizar los objetivos (**plus**) como filtrar registros, paginar, ordenar por columna.
+* Validar el estado de **habilitado** o **deshabilitado** de las categorias para su uso.
 
 ## Anotaciones
-* Al ser mi primera vez utilizando Symfony tuve complicaciones para agregar *boostrap* en el proyecto desde node_modules por lo que lo agregué con enlaces externos.
-* Tambien sucedió con *datable js*, asi que lo implemente en el Directorio *public* del proyecto.
+* Al ser mi primera vez utilizando Symfony tuve complicaciones para agregar **bootstrap** en el proyecto desde node_modules por lo que lo agregué con enlaces externos.
+* Tambien sucedió con **DataTable JS**, asi que lo implemente en el Directorio **public** del proyecto y para ello tuve que implementar jQuery.
 
 
 ### *¡Gracias!*

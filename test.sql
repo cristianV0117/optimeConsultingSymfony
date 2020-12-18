@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-12-2020 a las 07:21:51
+-- Tiempo de generación: 18-12-2020 a las 07:33:33
 -- Versión del servidor: 10.3.15-MariaDB
 -- Versión de PHP: 7.3.6
 
@@ -36,14 +36,6 @@ CREATE TABLE `categories` (
   `active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `categories`
---
-
-INSERT INTO `categories` (`id`, `code`, `name`, `description`, `active`) VALUES
-(1, 'CPP', 'Comida para perro', 'desc comida para perro', 1),
-(2, 'CPG', 'Comida para gato', 'desc comida para gato', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -59,14 +51,6 @@ CREATE TABLE `products` (
   `categories_id` int(11) DEFAULT NULL,
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `products`
---
-
-INSERT INTO `products` (`id`, `code`, `name`, `description`, `brand`, `categories_id`, `price`) VALUES
-(1, 'DOGCHOW', 'Dog chow perro', 'desc Dog chow para perro', 'Dog chow', 1, 45000),
-(2, 'DOGCHOWG', 'Dog chow gato', 'desc Dog chow para gato', 'Dog chow', 2, 60000);
 
 --
 -- Índices para tablas volcadas
@@ -93,13 +77,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT de la tabla `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
